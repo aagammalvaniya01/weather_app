@@ -8,7 +8,6 @@ const api = {
 };
 
 export default function Home() {
-
   const [query, setQuery] = useState('');
   const [weather, setWeather] = useState<any>(null);
   const [error, setError] = useState('');
@@ -24,7 +23,10 @@ export default function Home() {
     }
   }, []);
 
-  const fetchWeatherByCoords = async (lat: any, lon:any) => {
+  const fetchWeatherByCoords = async (
+    lat: number,
+    lon: number
+  ) => {
     try {
       const url = `${api.base}weather?lat=${lat}&lon=${lon}&appid=${api.key}&units=metric`;
       const response = await fetch(url);
@@ -37,7 +39,7 @@ export default function Home() {
     }
   };
 
-  const handleLocationError = (error: any) => {
+  const handleLocationError = () => {
     setError('Error obtaining location. Please try again.');
     setWeather(null);
   };
@@ -75,29 +77,35 @@ export default function Home() {
   };
 
   return (
-    <section className='details-bg py-5 px-20 m-auto w-[500px] h-full text-center flex flex-col gap-5'>
-      <div className='text-5xl text-[#726f76] font-bold'>Weather in</div>
+    <section className='details-bg max-w-xl mx-auto py-5 px-5 md:px-20 text-center flex flex-col gap-5 h-full'>
+      <div className='text-4xl text-[#726f76] font-bold'>Weather in</div>
       <div className='flex py-2'>
         <div className='relative w-full'>
           <input
             type='text'
-            placeholder='Search... '
-            className='p-4 text-base rounded-full text-black w-full'
+            placeholder='Search...'
+            className='p-4 text-base rounded-full text-black w-full focus:outline-none focus:ring focus:ring-opacity-50'
             onChange={(e) => setQuery(e.target.value)}
             value={query}
+            onKeyDown={handleSearch}
           />
           <button
             className='absolute top-4 right-3 cursor-pointer'
             onClick={() => handleSearch({ key: 'Enter' })}
           >
             <svg
-              className='icon-ui-search'
-              width='24'
-              height='24'
+              className='w-6 h-6'
+              fill='none'
+              stroke='currentColor'
               viewBox='0 0 24 24'
               xmlns='http://www.w3.org/2000/svg'
             >
-              <path d='M5.068 10.427c0-2.953 2.394-5.356 5.338-5.356 2.943 0 5.338 2.403 5.338 5.356 0 2.952-2.395 5.355-5.338 5.355-2.944 0-5.338-2.403-5.338-5.355m14.697 8.201l-4.277-4.29a6.41 6.41 0 001.324-3.911c0-3.55-2.868-6.427-6.406-6.427S4 6.877 4 10.427c0 3.549 2.868 6.426 6.406 6.426a6.363 6.363 0 003.956-1.374l4.271 4.286a.799.799 0 001.132 0 .806.806 0 000-1.137'></path>
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'
+              />
             </svg>
           </button>
         </div>
@@ -110,7 +118,7 @@ export default function Home() {
           </div>
           <div className='flex justify-between items-center'>
             <span className='text-5xl'>
-              {Math.round(weather?.main?.temp)}°c
+              {Math.round(weather?.main?.temp)}°C
             </span>
             <div className='flex flex-col items-start'>
               <span className='text-lg font-bold text-[#797a75]'>
@@ -129,13 +137,13 @@ export default function Home() {
           </div>
           <div className='flex justify-between'>
             <div>
-              <p className='text-5xl leading-none'>
-                {Math.round(weather?.main?.temp)}°c
+              <p className='text-4xl md:text-5xl leading-none'>
+                {Math.round(weather?.main?.temp)}°C
               </p>
               <p className='text-xs'>Feels Like</p>
             </div>
             <div>
-              <p className='text-5xl leading-none'>
+              <p className='text-4xl md:text-5xl leading-none'>
                 {weather?.main?.humidity}%
               </p>
               <p className='text-xs'>Humidity</p>

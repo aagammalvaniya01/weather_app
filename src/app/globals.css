@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+html {
+  height: 100%
+}
+
+body {
+  color: #171717;
+  background: #ffffff;
+  font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
+}
+
+.details-bg {
+/* background: linear-gradient(108.73deg, #0c266e 26.53%, #2152d5 58.22%); */
+background: linear-gradient(to right, #66a6ff, #89f7fe);
+}
